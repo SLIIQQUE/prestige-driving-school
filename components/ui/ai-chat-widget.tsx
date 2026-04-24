@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { MessageCircle, X, Send, Sparkles, Bot, Package, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
+import { MessageCircle, X, Send, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 interface Message {
@@ -12,30 +12,8 @@ interface Message {
   timestamp: Date;
 }
 
-const aiFeatures = [
-  {
-    id: "chat",
-    icon: Bot,
-    title: "AI Chat Assistant",
-    description: "Ask me anything about driving lessons, schedules, or our services",
-  },
-  {
-    id: "recommend",
-    icon: Package,
-    title: "Package Recommender",
-    description: "Get personalized package recommendations based on your needs",
-  },
-  {
-    id: "instructor",
-    icon: BookOpen,
-    title: "Virtual Instructor",
-    description: "Learn driving tips and guidance from our AI virtual instructor",
-  },
-];
-
 export default function AIChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeFeature, setActiveFeature] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
@@ -46,7 +24,6 @@ export default function AIChatWidget() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showFeatures, setShowFeatures] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -182,68 +159,6 @@ export default function AIChatWidget() {
                 Full Page
               </Link>
             </div>
-
-            <button
-              onClick={() => setShowFeatures(!showFeatures)}
-              className="w-full p-3 border-b text-left flex items-center justify-between"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <span className="text-sm font-medium" style={{ color: "var(--foreground)" }}>
-                AI Features
-              </span>
-              {showFeatures ? (
-                <ChevronUp className="w-4 h-4" style={{ color: "var(--foreground-muted)" }} />
-              ) : (
-                <ChevronDown className="w-4 h-4" style={{ color: "var(--foreground-muted)" }} />
-              )}
-            </button>
-
-            <AnimatePresence>
-              {showFeatures && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="border-b overflow-hidden"
-                  style={{ borderColor: "var(--border)" }}
-                >
-                  <div className="p-3 space-y-2">
-                    {aiFeatures.map((feature) => (
-                      <button
-                        key={feature.id}
-                        onClick={() => setActiveFeature(feature.id)}
-                        className="w-full p-3 rounded-xl text-left transition-all hover:scale-[1.02]"
-                        style={{ 
-                          backgroundColor: activeFeature === feature.id ? "var(--accent)" : "var(--background)",
-                          border: "1px solid var(--border)"
-                        }}
-                      >
-                        <div className="flex items-center gap-3">
-                          <feature.icon 
-                            className="w-5 h-5" 
-                            style={{ color: activeFeature === feature.id ? "white" : "var(--accent)" }} 
-                          />
-                          <div>
-                            <p 
-                              className="font-medium text-sm"
-                              style={{ color: activeFeature === feature.id ? "white" : "var(--foreground)" }}
-                            >
-                              {feature.title}
-                            </p>
-                            <p 
-                              className="text-xs"
-                              style={{ color: activeFeature === feature.id ? "white/70" : "var(--foreground-muted)" }}
-                            >
-                              {feature.description}
-                            </p>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((message) => (
