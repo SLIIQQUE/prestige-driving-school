@@ -43,7 +43,7 @@ export default function Hero() {
         className="container-custom relative z-10 pt-32 pb-12"
       >
         <div className="max-w-5xl mx-auto text-center">
-          <motion.div variants={premiumFadeUp} className="mb-8">
+          <motion.div variants={premiumFadeUp} className="mb-8 hidden sm:block">
             <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--accent)]/15 border border-[var(--accent)]/30 text-[var(--accent)] text-sm font-semibold">
               <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
               FRSC Certified Instructors
