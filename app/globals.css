@@ -1,26 +1,378 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Default (Light Mode) - Though we'll use dark as primary */
+  --background: oklch(98% 0.01 250);
+  --foreground: oklch(15% 0.03 250);
+  --foreground-muted: oklch(50% 0.02 250);
+  
+  --card: oklch(100% 0 250);
+  --card-foreground: oklch(15% 0.03 250);
+  --popover: oklch(100% 0 250);
+  --popover-foreground: oklch(15% 0.03 250);
+  
+  /* Primary: Deep Navy */
+  --primary: oklch(25% 0.08 250);
+  --primary-foreground: oklch(98% 0.01 250);
+  
+  /* Secondary */
+  --secondary: oklch(92% 0.01 250);
+  --secondary-foreground: oklch(15% 0.03 250);
+  
+  /* Accent: Vibrant Red */
+  --accent: oklch(55% 0.18 25);
+  --accent-foreground: oklch(98% 0.01 250);
+  
+  /* Gold Accent */
+  --gold: oklch(60% 0.15 60);
+  
+  --muted: oklch(92% 0.01 250);
+  --muted-foreground: oklch(50% 0.02 250);
+  --destructive: oklch(50% 0.15 25);
+  --border: oklch(85% 0.02 250);
+  --input: oklch(85% 0.02 250);
+  --ring: oklch(55% 0.15 250);
+  --radius: 1rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark Mode - Primary Theme */
+[data-theme="dark"],
+.dark {
+  --background: oklch(8% 0.015 250);
+  --foreground: oklch(95% 0.01 250);
+  --foreground-muted: oklch(70% 0.02 250);
+  
+  --card: oklch(12% 0.02 250);
+  --card-foreground: oklch(95% 0.01 250);
+  --popover: oklch(12% 0.02 250);
+  --popover-foreground: oklch(95% 0.01 250);
+  
+  --primary: oklch(55% 0.18 25);
+  --primary-foreground: oklch(98% 0.01 250);
+  
+  --secondary: oklch(18% 0.03 250);
+  --secondary-foreground: oklch(95% 0.01 250);
+  
+  --accent: oklch(65% 0.22 25);
+  --accent-foreground: oklch(98% 0.01 250);
+  
+  --gold: oklch(65% 0.18 60);
+  
+  --muted: oklch(22% 0.02 250);
+  --muted-foreground: oklch(60% 0.015 250);
+  --destructive: oklch(55% 0.18 25);
+  --border: oklch(25% 0.03 250);
+  --input: oklch(25% 0.03 250);
+  --ring: oklch(55% 0.18 25);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Force dark theme by default */
+html {
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --font-display: var(--font-display-var);
+  --font-body: var(--font-body-var);
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), sans-serif;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+}
+
+/* Premium Gradients */
+.gradient-text-premium {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Premium Glassmorphism */
+.glass-card {
+  backdrop-filter: blur(12px);
+  background: rgba(30, 40, 60, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+}
+
+.glass-premium {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-premium-dark {
+  backdrop-filter: blur(20px);
+  background: rgba(15, 20, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Premium Button */
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: var(--primary-foreground);
+  border-radius: 9999px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-premium:hover::before {
+  left: 100%;
+}
+
+.btn-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -10px rgba(230, 57, 70, 0.4);
+}
+
+/* Active Nav Link */
+.active-nav {
+  color: var(--accent) !important;
+}
+
+/* Card Hover */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+.card-premium {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-premium:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 25px 50px -15px rgba(230, 57, 70, 0.25);
+}
+
+/* Section Padding */
+.section-padding {
+  padding: clamp(4rem, 10vw, 8rem) 0;
+}
+
+.container-custom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+}
+
+/* Focus & Selection */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* Shimmer Effect */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+}
+
+.shimmer:hover::after {
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* Float Animation */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Animated Background Pattern */
+.animated-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, var(--accent) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, var(--gold) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: pattern-move 20s linear infinite;
+}
+
+@keyframes pattern-move {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 60px 60px, 60px 60px; }
+}
+
+/* Image Hover Zoom */
+.img-zoom-hover {
+  overflow: hidden;
+}
+
+.img-zoom-hover img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.img-zoom-hover:hover img {
+  transform: scale(1.1);
+}
+
+/* Utility Classes for Theme Consistency */
+.theme-dark {
+  --background: oklch(8% 0.015 250);
+  --foreground: oklch(95% 0.01 250);
+  --foreground-muted: oklch(70% 0.02 250);
+  --card: oklch(12% 0.02 250);
+  --card-foreground: oklch(95% 0.01 250);
+  --border: oklch(25% 0.03 250);
+  --muted: oklch(22% 0.02 250);
+  --muted-foreground: oklch(60% 0.015 250);
+}
+
+.theme-light {
+  --background: oklch(98% 0.01 250);
+  --foreground: oklch(15% 0.03 250);
+  --foreground-muted: oklch(50% 0.02 250);
+  --card: oklch(100% 0 250);
+  --card-foreground: oklch(15% 0.03 250);
+  --border: oklch(85% 0.02 250);
+  --muted: oklch(92% 0.01 250);
+  --muted-foreground: oklch(50% 0.02 250);
+}
+
+/* Ensure text visibility on all backgrounds */
+.text-primary {
+  color: var(--foreground) !important;
+}
+
+.text-secondary {
+  color: var(--foreground-muted) !important;
+}
+
+.text-accent {
+  color: var(--accent) !important;
+}
+
+.text-muted {
+  color: var(--muted-foreground) !important;
+}
+
+/* Background utilities */
+.bg-primary {
+  background: var(--background) !important;
+}
+
+.bg-secondary {
+  background: var(--secondary) !important;
+}
+
+.bg-card {
+  background: var(--card) !important;
+}
+
+.bg-accent {
+  background: var(--accent) !important;
 }

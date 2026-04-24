@@ -32,6 +32,18 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# project docs
+wireframes.md
+website-plan.md
+task_plan.md
+findings.md
+progress.md
+AGENTS.md
+CLAUDE.md
+.agents/
+skills-lock.json
 
 # vercel
 .vercel
